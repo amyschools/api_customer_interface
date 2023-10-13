@@ -3,7 +3,7 @@
 ### Overview
 This API provides an interface for customer data. Customers can be
 created, updated, viewed, and deleted. Users can also sign up for the 
-first time, log in with their password, and reset their password.
+first time with their email and a password, log in, and reset their password.
 
 ### Documentation
 Full API documentation can be found at `http://127.0.0.1:8000/api/ui/`
@@ -19,17 +19,19 @@ python app.py
 ### Choices
 #### Framework
 I am using Flask for this project because it provides a very lightweight
-structure for an API microservice. If the API was going to be expanded
+structure for an API microservice. 
+
+If the API was going to be expanded
 or the project was going to contain other resources such as a frontend, Django/Django Rest Framework
-would probably be a better choice.
+would probably be a more robust choice.
 
 #### API
-For the API I am use the library Connexion, which allows you create 
-documentation with Swagger at the same time as the API itself. 
+For the API I am using the library Connexion, which allows you create 
+documentation with Swagger at the same time as you create the API itself. 
 
 #### Database
 I am using SQLite since it is lightweight and comes built in with Python.
-On top of this I am using SQLAlchemy as an ORM. SQLAlchemy pairs well with Flask.
+On top of this I am using SQLAlchemy as the ORM. SQLAlchemy is frequently used with Flask.
 
 I am also using Marshmallow, a lightweight schema library, to provide a layer 
 of error handling and data standardization between the API and the SqlAlchemy 
