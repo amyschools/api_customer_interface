@@ -1,0 +1,5 @@
+flask-marshmallow[sqlalchemy] == 0.14.0
+Flask==2.2.2
+connexion[swagger-ui]==2.14.1
+Flask-Bcrypt==1.0.1
+typing==3.7.4.3

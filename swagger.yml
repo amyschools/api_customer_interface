@@ -1,0 +1,202 @@
+openapi: 3.0.0
+info:
+  title: "Carly Customer Interface"
+  description: "API for customer information and authentication"
+  version: "2.1.0"
+
+servers:
+  - url: "/api"
+
+paths:
+  /customers:
+    get:
+      operationId: "app.customers.get_list"
+      tags:
+        - "Customers"
+      summary: "Get the list of customers"
+      responses:
+        "200":
+          description: "Success"
+
+    post:
+      operationId: "app.customers.create"
+      tags:
+        - Customers
+      summary: "Create a customer"
+      requestBody:
+        description: "Customer to create"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "customer"
+              $ref: "#/components/schemas/Customers"
+      responses:
+        "201":
+          description: "Successfully created customer"
+        "400":
+          description: "Bad Request"
+
+  /customers/{email}:
+    get:
+      operationId: "app.customers.get_single"
+      tags:
+        - Customers
+      summary: "Get single customer"
+      parameters:
+        - $ref: "#/components/parameters/email"
+      responses:
+        "200":
+          description: "Success"
+        "404":
+          description: "Not Found"
+
+    put:
+      tags:
+        - Customers
+      operationId: "app.customers.update"
+      summary: "Update a customer's language"
+      parameters:
+        - $ref: "#/components/parameters/email"
+      responses:
+        "200":
+          description: "Successfully updated customer's language"
+        "404":
+          description: "Not Found"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "language"
+              $ref: "#/components/schemas/Language"
+
+    delete:
+      tags:
+        - Customers
+      operationId: "app.customers.delete"
+      summary: "Delete a customer"
+      parameters:
+        - $ref: "#/components/parameters/email"
+      responses:
+        "200":
+          description: "Successfully deleted customer"
+        "404":
+          description: "Not Found"
+
+  /auth/login:
+    post:
+      operationId: "app.authentication.login"
+      tags:
+        - Authentication
+      summary: "Log in"
+      requestBody:
+        description: "Customer Authentication"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "customer_auth"
+              $ref: "#/components/schemas/CustomerAuthentication"
+      responses:
+        "200":
+          description: "Login Successful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: The user email.
+                  language:
+                    type: string
+                    description: The user language.
+        "401":
+          description: "Unauthorized"
+        "404":
+          description: "Not Found"
+
+  /auth/reset:
+    post:
+      operationId: "app.authentication.reset_password"
+      tags:
+        - Authentication
+      summary: "Reset Password"
+      requestBody:
+        description: "New user password and email"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "customer_auth"
+              $ref: "#/components/schemas/CustomerAuthentication"
+      responses:
+        "200":
+          description: "Password successfully reset"
+        "404":
+          description: "Not Found"
+
+  /auth/signup:
+    post:
+      operationId: "app.authentication.sign_up"
+      tags:
+        - Authentication
+      summary: "Register new customer with email and password"
+      requestBody:
+        description: "Customer password and email"
+        required: True
+        content:
+          application/json:
+            schema:
+              x-body-name: "customer_auth"
+              $ref: "#/components/schemas/CustomerAuthentication"
+      responses:
+        "201":
+          description: "Customer successfully created"
+        "400":
+          description: "Customer already exists"
+
+components:
+  schemas:
+    Customers:
+      type: "object"
+      required:
+        - email
+      properties:
+        email:
+          type: "string"
+        customer_id:
+          type: "string"
+        country:
+          type: "string"
+        language:
+          type: "string"
+
+
+    Language:
+      type: "object"
+      required:
+        - language
+      properties:
+        language:
+          type: "string"
+
+    CustomerAuthentication:
+      type: "object"
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: "string"
+        password:
+          type: "string"
+
+  parameters:
+    email:
+      name: "email"
+      description: "email"
+      in: path
+      required: True
+      schema:
+        type: "string"

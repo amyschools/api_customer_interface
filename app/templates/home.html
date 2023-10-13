@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RP Flask REST API</title>
+</head>
+<body>
+    <h1>
+        Carly Customer Index
+    </h1>
+    <ul>
+        {% for customer in customers %}
+        <li>{{ customer.email }} {{ customer.language }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
